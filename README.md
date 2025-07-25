@@ -1,2 +1,2 @@
-# Exercicios de Python
-Aprendendo linguagem Python
+# CRUD
+Small project using Python.
