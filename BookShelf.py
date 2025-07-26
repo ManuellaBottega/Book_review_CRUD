@@ -1,4 +1,3 @@
-
 import datetime
 
 BookShelf = []
@@ -139,7 +138,7 @@ def view_books():
 
 
 def edit_book():
-    print('test')
+    
 def ranking_books():
 
 def delete_book():
