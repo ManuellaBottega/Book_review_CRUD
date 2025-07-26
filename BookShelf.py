@@ -4,7 +4,7 @@ BookShelf = []
 
 def menu():
     while True:
-        print('-----YOUR BOOKS-----')
+        print('\n-----YOUR BOOKS-----')
         print('1 - Add Book')
         print('2 - View Books')
         print('3 - Edit Book')
@@ -24,11 +24,10 @@ def menu():
         elif choice == '5':
             delete_book()
         elif choice == '6':
-            print('Thanks for using book shelf! See you next time! (your data will be lost)')
+            print('Thanks for using Bookshelf! See you next time! (your data will be lost)')
             break
         else:
             print('This is not a valid option. Please try again.')
-            menu()
 
 def add_book():
     title = input('Enter book title: ')
@@ -57,11 +56,11 @@ def add_book():
     if status == '1':
 
         while True:
-            avaliation = input('Enter book avaliation: (1-5 stars): ')
-            if avaliation.isdigit() and 6 > int(avaliation) > 0 :
+            rating = input('Enter book rating: (1-5 stars): ')
+            if rating.isdigit() and 6 > int(rating) > 0 :
                 break
             else:
-                print('This is not a valid avaliation. Please try again.')
+                print('This is not a valid number. Please try again.')
 
         review = input('Enter book review: ')
         while True:
@@ -72,7 +71,7 @@ def add_book():
             except ValueError:
                 print('This is not a valid date. Please try again.')
 
-        book['avaliation'] = avaliation
+        book['rating'] = rating
         book['review'] = review
         book['conclusion_date'] = conclusionDate
 
@@ -85,17 +84,17 @@ def add_book():
                 print('This is not a valid number. Please try again.')
 
         while True:
-            current_page = input('Enter in what page you are: ')
+            current_page = input('Enter your current page: ')
             if current_page.isdigit():
                 break
             else:
                 print('This is not a valid number. Please try again.')
 
-        progress = (int(current_page)/int(pages))*100
+        progress = int((int(current_page)/int(pages))*100)
         book['progress'] = progress
 
     elif status == '3':
-        motive = input('Enter why you dropped this book: ')
+        motive = input('Enter the reason you dropped this book: ')
         book['motive'] = motive
 
     BookShelf.append(book)
@@ -126,7 +125,7 @@ def view_books():
         print(f"Status: {status_text}")
 
         if book['status'] == '1':
-            print(f"Avaliation: {book['avaliation']} stars")
+            print(f"Rating: {book['rating']} stars")
             print(f"Review: {book['review']}")
             print(f"Conclusion Date: {book['conclusion_date']}")
 
@@ -134,14 +133,14 @@ def view_books():
             print(f"Reading progress: {book['progress']}%")
 
         elif book['status'] == '3':
-            print(f"Motive of dropping the book: {book['motive']}")
+            print(f"Reason for dropping the book: {book['motive']}")
 
 
 def edit_book():
-    
+    print('test')
 def ranking_books():
-
+    print('test')
 def delete_book():
-
+    print('test')
 
 menu()
