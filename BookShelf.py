@@ -121,7 +121,7 @@ def view_books():
         view_filter = BookShelf
 
     elif view_choice == '2':
-        view_status = input ('\nWich status you want to view? (1. complete, 2. reading, 3. dropped, 4. want to read) ')
+        view_status = input ('\nWhich status you want to view? (1. complete, 2. reading, 3. dropped, 4. want to read) ')
         if view_status.isdigit and 0 < int(view_status) < 5:
             view_filter = [book for book in BookShelf if book.get('status') == view_status]
         else:
@@ -129,11 +129,11 @@ def view_books():
             return
         
     elif view_choice == '3':
-            view_name = input ('\nWich title you want to search? ')
+            view_name = input ('\nWhich title you want to search? ')
             view_filter = [book for book in BookShelf if book.get('title').replace(' ', '').lower() == view_name.replace(' ', '').lower()]
 
     elif view_choice == '4':
-        view_rating = input ('\nWich rating you want to view? (1-5) ')
+        view_rating = input ('\nWhich rating you want to view? (1-5) ')
         if view_rating.isdigit and 0 < int(view_rating) < 6:
             view_filter = [book for book in BookShelf if book.get('rating') == view_rating]
         else:
@@ -141,7 +141,7 @@ def view_books():
             return
 
     elif view_choice == '5':
-        view_author = input ('\nWich author you want to view? ')
+        view_author = input ('\nWhich author you want to view? ')
         view_filter = [book for book in BookShelf if book.get('author').replace(' ', '').lower() == view_author.replace(' ', '').lower()]
     
     else:
