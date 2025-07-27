@@ -4,7 +4,7 @@ BookShelf = []
 
 def menu():
     while True:
-        print('\n-----YOUR BOOKS-----')
+        print('\n-----BOOKSHELF-----')
         print('1 - Add Book')
         print('2 - View Books')
         print('3 - Edit Book')
@@ -12,22 +12,22 @@ def menu():
         print('5 - Delete Book')
         print('6 - Quit')
 
-        choice = input('Type the number of your choice: ')
-        if choice == '1':
+        menu_choice = input('\nType the number of your choice: ')
+        if menu_choice == '1':
             add_book()
-        elif choice == '2':
+        elif menu_choice == '2':
             view_books()
-        elif choice == '3':
+        elif menu_choice == '3':
             edit_book()
-        elif choice == '4':
+        elif menu_choice == '4':
             ranking_books()
-        elif choice == '5':
+        elif menu_choice == '5':
             delete_book()
-        elif choice == '6':
-            print('Thanks for using Bookshelf! See you next time! (your data will be lost)')
+        elif menu_choice == '6':
+            print('\nThanks for using Bookshelf! See you next time! (your data will be lost)')
             break
         else:
-            print('This is not a valid option. Please try again.')
+            print('\nThis is not a valid option. Please try again.')
 
 def add_book():
     title = input('Enter book title: ')
@@ -98,7 +98,7 @@ def add_book():
         book['motive'] = motive
 
     BookShelf.append(book)
-    print('your book has been added to the shelf.')
+    print('\nyour book has been added to the shelf.')
 
 
 def view_books():
@@ -106,35 +106,79 @@ def view_books():
         print('\nThere are no books registered in the shelf.')
         return
 
-    print('\n----- ALL BOOKS -----')
-    for i, book in enumerate(BookShelf, 1):
-        print(f"\n----- Book #{i} -----")
-        print(f"Title: {book['title']}")
-        print(f"Author: {book['author']}")
-        print(f"Publication Year: {book['publication']}")
+    print('\nHow would you like to view your books? ')
+    print('1. View all books')
+    print('2. View by especific status')
+    print('3. Search by name')
+    print('4. View by especific rating')
+    print('5. View by especific author')
 
-        status_text = "Unknown"
-        if book['status'] == '1':
-            status_text = "Complete"
-        elif book['status'] == '2':
-            status_text = "Reading"
-        elif book['status'] == '3':
-            status_text = "Dropped"
-        elif book['status'] == '4':
-            status_text = "Want to read"
-        print(f"Status: {status_text}")
+    view_choice = input('\nEnter the number of your choice: ')
 
-        if book['status'] == '1':
-            print(f"Rating: {book['rating']} stars")
-            print(f"Review: {book['review']}")
-            print(f"Conclusion Date: {book['conclusion_date']}")
+    view_filter = []
 
-        elif book['status'] == '2':
-            print(f"Reading progress: {book['progress']}%")
+    if view_choice == '1':
+        view_filter = BookShelf
 
-        elif book['status'] == '3':
-            print(f"Reason for dropping the book: {book['motive']}")
+    elif view_choice == '2':
+        view_status = input ('\nWich status you want to view? (1. complete, 2. reading, 3. dropped, 4. want to read) ')
+        if view_status.isdigit and 0 < int(view_status) < 5:
+            view_filter = [book for book in BookShelf if book.get('status') == view_status]
+        else:
+            print('\nThis is not a valid number. Please try again.')
+            return
+        
+    elif view_choice == '3':
+            view_name = input ('\nWich title you want to search? ')
+            view_filter = [book for book in BookShelf if book.get('title').replace(' ', '').lower() == view_name.replace(' ', '').lower()]
 
+    elif view_choice == '4':
+        view_rating = input ('\nWich rating you want to view? (1-5) ')
+        if view_rating.isdigit and 0 < int(view_rating) < 6:
+            view_filter = [book for book in BookShelf if book.get('rating') == view_rating]
+        else:
+            print('\nThis is not a valid number. Please try again.')
+            return
+
+    elif view_choice == '5':
+        view_author = input ('\nWich author you want to view? ')
+        view_filter = [book for book in BookShelf if book.get('author').replace(' ', '').lower() == view_author.replace(' ', '').lower()]
+    
+    else:
+        print('\nThis is not a valid option. Please try again.')
+
+    if view_filter == []:
+        print('\nThere is no book in this option.')
+    
+    else:
+        print('\n----- YOUR BOOKS -----')
+        for i, book in enumerate(view_filter, 1):
+            print(f"\n----- Book #{i} -----")
+            print(f"Title: {book['title']}")
+            print(f"Author: {book['author']}")
+            print(f"Publication Year: {book['publication']}")
+
+            status_text = "Unknown"
+            if book['status'] == '1':
+                status_text = "Complete"
+            elif book['status'] == '2':
+                status_text = "Reading"
+            elif book['status'] == '3':
+                status_text = "Dropped"
+            elif book['status'] == '4':
+                status_text = "Want to read"
+            print(f"Status: {status_text}")
+
+            if book['status'] == '1':
+                print(f"Rating: {book['rating']} stars")
+                print(f"Review: {book['review']}")
+                print(f"Conclusion Date: {book['conclusion_date']}")
+
+            elif book['status'] == '2':
+                print(f"Reading progress: {book['progress']}%")
+
+            elif book['status'] == '3':
+                print(f"Reason for dropping the book: {book['motive']}")
 
 def edit_book():
     print('test')
