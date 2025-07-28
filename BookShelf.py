@@ -100,12 +100,7 @@ def add_book():
     BookShelf.append(book)
     print('\nyour book has been added to the shelf.')
 
-
-def view_books():
-    if not BookShelf:
-        print('\nThere are no books registered in the shelf.')
-        return
-
+def filters():
     print('\nHow would you like to view your books? ')
     print('1. View all books')
     print('2. View by especific status')
@@ -113,75 +108,103 @@ def view_books():
     print('4. View by especific rating')
     print('5. View by especific author')
 
-    view_choice = input('\nEnter the number of your choice: ')
+    filter_choice = input('\nEnter the number of your choice: ')
 
-    view_filter = []
+    filter = []
 
-    if view_choice == '1':
-        view_filter = BookShelf
+    if filter_choice == '1':
+        filter = BookShelf
 
-    elif view_choice == '2':
-        view_status = input ('\nWhich status you want to view? (1. complete, 2. reading, 3. dropped, 4. want to read) ')
-        if view_status.isdigit and 0 < int(view_status) < 5:
-            view_filter = [book for book in BookShelf if book.get('status') == view_status]
+    elif filter_choice == '2':
+        filter_status = input ('\nWhich status you want to view? (1. complete, 2. reading, 3. dropped, 4. want to read) ')
+        if filter_status.isdigit() and 0 < int(filter_status) < 5:
+            filter = [book for book in BookShelf if book.get('status') == filter_status]
         else:
             print('\nThis is not a valid number. Please try again.')
             return
         
-    elif view_choice == '3':
-            view_name = input ('\nWhich title you want to search? ')
-            view_filter = [book for book in BookShelf if book.get('title').replace(' ', '').lower() == view_name.replace(' ', '').lower()]
+    elif filter_choice == '3':
+            filter_name = input ('\nWhich title you want to search? ')
+            filter = [book for book in BookShelf if book.get('title').replace(' ', '').lower() == filter_name.replace(' ', '').lower()]
 
-    elif view_choice == '4':
-        view_rating = input ('\nWhich rating you want to view? (1-5) ')
-        if view_rating.isdigit and 0 < int(view_rating) < 6:
-            view_filter = [book for book in BookShelf if book.get('rating') == view_rating]
+    elif filter_choice == '4':
+        filter_rating = input ('\nWhich rating you want to view? (1-5) ')
+        if filter_rating.isdigit() and 0 < int(filter_rating) < 6:
+            filter = [book for book in BookShelf if book.get('rating') == filter_rating]
         else:
             print('\nThis is not a valid number. Please try again.')
             return
 
-    elif view_choice == '5':
-        view_author = input ('\nWhich author you want to view? ')
-        view_filter = [book for book in BookShelf if book.get('author').replace(' ', '').lower() == view_author.replace(' ', '').lower()]
+    elif filter_choice == '5':
+        filter_author = input ('\nWhich author you want to view? ')
+        filter = [book for book in BookShelf if book.get('author').replace(' ', '').lower() == filter_author.replace(' ', '').lower()]
     
     else:
         print('\nThis is not a valid option. Please try again.')
 
-    if view_filter == []:
+    if filter == []:
         print('\nThere is no book in this option.')
+
+    return filter
+
+def display(view_filter):
+    print('\n----- YOUR BOOKS -----')
+    for i, book in enumerate(view_filter, 1):
+        print(f"\n----- Book #{i} -----")
+        print(f"Title: {book['title']}")
+        print(f"Author: {book['author']}")
+        print(f"Publication Year: {book['publication']}")
+
+        status_text = "Unknown"
+        if book['status'] == '1':
+            status_text = "Complete"
+        elif book['status'] == '2':
+            status_text = "Reading"
+        elif book['status'] == '3':
+            status_text = "Dropped"
+        elif book['status'] == '4':
+            status_text = "Want to read"
+        print(f"Status: {status_text}")
+
+        if book['status'] == '1':
+            print(f"Rating: {book['rating']} stars")
+            print(f"Review: {book['review']}")
+            print(f"Conclusion Date: {book['conclusion_date']}")
+
+        elif book['status'] == '2':
+            print(f"Reading progress: {book['progress']}%")
+
+        elif book['status'] == '3':
+            print(f"Reason for dropping the book: {book['motive']}")
+    return
+
+def view_books():
+
+    view_filter = filters()
+    if view_filter is None:
+        return
+
+    if not BookShelf:
+        print('\nThere are no books registered in the shelf.')
+        return
     
     else:
-        print('\n----- YOUR BOOKS -----')
-        for i, book in enumerate(view_filter, 1):
-            print(f"\n----- Book #{i} -----")
-            print(f"Title: {book['title']}")
-            print(f"Author: {book['author']}")
-            print(f"Publication Year: {book['publication']}")
+        display(view_filter)
 
-            status_text = "Unknown"
-            if book['status'] == '1':
-                status_text = "Complete"
-            elif book['status'] == '2':
-                status_text = "Reading"
-            elif book['status'] == '3':
-                status_text = "Dropped"
-            elif book['status'] == '4':
-                status_text = "Want to read"
-            print(f"Status: {status_text}")
-
-            if book['status'] == '1':
-                print(f"Rating: {book['rating']} stars")
-                print(f"Review: {book['review']}")
-                print(f"Conclusion Date: {book['conclusion_date']}")
-
-            elif book['status'] == '2':
-                print(f"Reading progress: {book['progress']}%")
-
-            elif book['status'] == '3':
-                print(f"Reason for dropping the book: {book['motive']}")
 
 def edit_book():
-    print('test')
+    edit_filter = filters()
+    if edit_filter is None:
+        return
+
+    display(edit_filter)
+    choice = input('Write the number of the book you want to edit: ')
+    for i, book in enumerate(edit_filter, 1):
+        if choice.isdigit() and int(choice) == i:
+            new_title = input("Enter the new title: ")
+            book['title'] = new_title
+            print("Book updated successfully!")
+
 def ranking_books():
     print('test')
 def delete_book():
