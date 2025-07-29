@@ -175,7 +175,7 @@ def display(view_filter):
             print(f"Reading progress: {book['progress']}%")
 
         elif book['status'] == '3':
-            print(f"Reason for dropping the book: {book['motive']}")
+            print(f"Reason for dropping the book(motive): {book['motive']}")
     return
 
 def view_books():
@@ -197,7 +197,8 @@ def edit_book():
         return
 
     display(edit_filter)
-    choice_edit = input('Write the number of the book you want to edit: ')
+    choice_edit = {}
+    choice_edit = input('\nWrite the number of the book you want to edit: ')
     for i, book in enumerate(edit_filter, 1):
             if choice_edit.isdigit() and int(choice_edit) == i:
                 keep_going = 'yes'
@@ -210,7 +211,7 @@ def edit_book():
                             book[what_edit] = new_value
                             print("Book updated successfully!")
 
-                            keep_going = input('Want to edit something else? (y/n)')
+                            keep_going = input('Want to edit something else? (y/n) ')
 
                         elif what_edit == 'rating':
                             while True:
@@ -219,7 +220,7 @@ def edit_book():
                                     book['rating'] = int(new_value)
                                     print("Book updated successfully!")
 
-                                    keep_going = input('Want to edit something else? (y/n)')
+                                    keep_going = input('Want to edit something else? (y/n) ')
                                     break
                                 else:
                                     print('This is not a valid number. Please try again.')
@@ -278,7 +279,7 @@ def edit_book():
 
                                 print("Book updated successfully!")
                                 keep_going = input('Want to edit something else? (y/n) ')
-
+                                break
 
                         elif what_edit == 'conclusion_date':
                             while True:
@@ -325,10 +326,12 @@ def edit_book():
                             print("Book updated successfully!")
                             
                             keep_going = input('Want to edit something else? (y/n) ')
-                        
-                else:
-                    print("Invalid selection. Try again.")
-            return
+                            break
+
+                        else:
+                            print("Invalid selection. Try again.")
+                            return
+                
 
 def ranking_books():
     print('test')
