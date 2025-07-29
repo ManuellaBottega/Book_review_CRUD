@@ -336,8 +336,71 @@ def edit_book():
                 edit_book() 
 
 def ranking_books():
-    print('test')
+    ranking1 = [book for book in BookShelf if book.get('rating') == '1']
+    ranking2 = [book for book in BookShelf if book.get('rating') == '2']
+    ranking3 = [book for book in BookShelf if book.get('rating') == '3']
+    ranking4 = [book for book in BookShelf if book.get('rating') == '4']
+    ranking5 = [book for book in BookShelf if book.get('rating') == '5']
+
+    print('----- 1 STAR -----')
+    if ranking5 == []:
+        print('There`s no books with this rating!')
+    else:
+        for book in ranking1:
+            print(f"\nTitle: {book['title']}")
+            print(f"Author: {book['author']}")
+
+    print('\n----- 2 STAR -----')
+    if ranking2 == []:
+        print('There`s no books with this rating!')
+    else:
+        for book in ranking2:
+            print(f"\nTitle: {book['title']}")
+            print(f"Author: {book['author']}")
+
+    print('\n----- 3 STAR -----')
+    if ranking3 == []:
+        print('There`s no books with this rating!')
+    else:
+        for book in ranking3:
+            print(f"\nTitle: {book['title']}")
+            print(f"Author: {book['author']}")
+
+    print('\n----- 4 STAR -----')
+    if ranking4 == []:
+        print('There`s no books with this rating!')
+    else:
+        for book in ranking4:
+            print(f"\nTitle: {book['title']}")
+            print(f"Author: {book['author']}")
+
+    print('\n----- 5 STAR -----')
+    if ranking5 == []:
+        print('There`s no books with this rating!')
+    else:
+        for book in ranking5:
+            print(f"\nTitle: {book['title']}")
+            print(f"Author: {book['author']}")
+
 def delete_book():
-    print('test')
+    delete_filter = filters()
+    if delete_filter is None:
+        return
+
+    display(delete_filter)
+    choice_delete = input('\nWrite the number of the book you want to delete: ')
+    for i, book in enumerate(delete_filter, 1):
+            if choice_delete.isdigit() and int(choice_delete) == i:
+                sure = input(f'Are you sure you want to delete {book['title']}? (y/n) ')
+
+                if sure.lower() == 'y' or sure.lower() == 'yes':
+                    BookShelf.remove(book)
+                    print('Book deleted with sucess!')
+                
+                else:
+                    print('Ok! The book wont be deleted.')
+                    menu()
+                break
+
 
 menu()
