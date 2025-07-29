@@ -328,10 +328,12 @@ def edit_book():
                             keep_going = input('Want to edit something else? (y/n) ')
                             break
 
-                        else:
-                            print("Invalid selection. Try again.")
-                            return
-                
+                    else:
+                        print("Invalid selection. Try again.")
+                        edit_book()
+            else:
+                print("This book doesn't exist. Try again.")
+                edit_book() 
 
 def ranking_books():
     print('test')
