@@ -1,3 +1,5 @@
+from menu import BookShelf
+
 def filters():
     print('\nHow would you like to view your books? ')
     print('1. View all books')
