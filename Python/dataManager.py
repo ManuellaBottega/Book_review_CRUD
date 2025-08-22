@@ -1,4 +1,5 @@
-from menu import BookShelf, menu
+from menu import menu
+from bookShelf_data import BookShelf
 from output import filters, display 
 import datetime
 

@@ -1,7 +1,6 @@
 from dataManager import add_book, edit_book, delete_book
 from output import view_books, ranking_books
-
-BookShelf = []
+from bookShelf_data import BookShelf
 
 def menu():
     while True:
