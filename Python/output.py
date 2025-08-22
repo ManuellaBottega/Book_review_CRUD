@@ -1,13 +1,11 @@
 from bookShelf_data import BookShelf
-from menu import menu
 
 def filters():
     print('\nHow would you like to view your books? ')
     print('1. View all books')
     print('2. View by especific status')
-    print('3. Search by name')
+    print('3. Search by name or author')
     print('4. View by especific rating')
-    print('5. View by especific author')
 
     filter_choice = input('\nEnter the number of your choice: ')
 
@@ -15,36 +13,38 @@ def filters():
 
     if filter_choice == '1':
         filter = BookShelf
+        if filter == []:
+                print('\nThere is no book in this option.')
 
     elif filter_choice == '2':
         filter_status = input ('\nWhich status you want to view? (1. complete, 2. reading, 3. dropped, 4. want to read) ')
         if filter_status.isdigit() and 0 < int(filter_status) < 5:
             filter = [book for book in BookShelf if book.get('status') == filter_status]
+            if filter == []:
+                print('\nThere is no book in this option.')
         else:
             print('\nThis is not a valid number. Please try again.')
             return
         
     elif filter_choice == '3':
-            filter_name = input ('\nWhich title you want to search? ')
-            filter = [book for book in BookShelf if book.get('title').replace(' ', '').lower() == filter_name.replace(' ', '').lower()]
+            filter_name = input ('\nWhich title or author you want to search? ')
+            filter = [book for book in BookShelf if book.get('title').replace(' ', '').lower() == filter_name.replace(' ', '').lower() or book for book in BookShelf if book.get('author').replace(' ', '').lower() == filter_name.replace(' ', '').lower()]
+            if filter == []:
+                print('\nThere is no book in this option.')
 
     elif filter_choice == '4':
         filter_rating = input ('\nWhich rating you want to view? (1-5) ')
         if filter_rating.isdigit() and 0 < int(filter_rating) < 6:
             filter = [book for book in BookShelf if book.get('rating') == filter_rating]
+            if filter == []:
+                print('\nThere is no book in this option.')
+
         else:
             print('\nThis is not a valid number. Please try again.')
             return
 
-    elif filter_choice == '5':
-        filter_author = input ('\nWhich author you want to view? ')
-        filter = [book for book in BookShelf if book.get('author').replace(' ', '').lower() == filter_author.replace(' ', '').lower()]
-    
     else:
         print('\nThis is not a valid option. Please try again.')
-
-    if filter == []:
-        print('\nThere is no book in this option.')
 
     return filter
 

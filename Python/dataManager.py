@@ -1,4 +1,3 @@
-from menu import menu
 from bookShelf_data import BookShelf
 from output import filters, display 
 import datetime
@@ -76,14 +75,17 @@ def add_book():
 
 def edit_book():
     edit_filter = filters()
-    if edit_filter is None:
+    if not edit_filter:
         return
 
     display(edit_filter)
-    choice_edit = {}
-    choice_edit = input('\nWrite the number of the book you want to edit: ')
-    for i, book in enumerate(edit_filter, 1):
+    
+    while True:
+        choice_edit = input('\nWrite the number of the book you want to edit: ')
+        found_book = False
+        for i, book in enumerate(edit_filter, 1):
             if choice_edit.isdigit() and int(choice_edit) == i:
+                found_book = True
                 keep_going = 'yes'
                 while keep_going.lower() in ['yes', 'y']:
                     what_edit = input('Write what item you want to edit (ex: title, author, status, etc): ').lower()
@@ -114,7 +116,6 @@ def edit_book():
                                 if status in ['1', '2', '3', '4']:
                                     book['status'] = status
                                     if status == '1':
-
                                         while True:
                                             rating = input('Enter book rating: (1-5 stars): ')
                                             if rating.isdigit() and 6 > int(rating) > 0 :
@@ -157,13 +158,12 @@ def edit_book():
                                         motive = input('Enter the reason you dropped this book: ').strip()
                                         book['motive'] = motive
 
+                                    print("Book updated successfully!")
+                                    keep_going = input('Want to edit something else? (y/n) ')
+                                    break
                                 else:
                                     print('This is not a valid status. Please try again.')
-
-                                print("Book updated successfully!")
-                                keep_going = input('Want to edit something else? (y/n) ')
-                                break
-
+                                    
                         elif what_edit == 'conclusion_date':
                             while True:
                                 conclusion_date = input('Enter book conclusion date (dd/mm/yyyy): ')
@@ -213,27 +213,40 @@ def edit_book():
 
                     else:
                         print("Invalid selection. Try again.")
-                        edit_book()
-            else:
-                print("This book doesn't exist. Try again.")
-                edit_book()
-
+                        
+                break
+        
+        if found_book:
+            break
+        else:
+            print("This book doesn't exist. Try again.")
+    
 def delete_book():
     delete_filter = filters()
     if delete_filter is None:
         return
 
     display(delete_filter)
-    choice_delete = input('\nWrite the number of the book you want to delete: ')
-    for i, book in enumerate(delete_filter, 1):
-            if choice_delete.isdigit() and int(choice_delete) == i:
-                sure = input(f'Are you sure you want to delete {book['title']}? (y/n) ')
+    if delete_filter == []:
+            print('\nThere is no book in this option.')
+    else:
+        while True:
+            choice_delete = {}
+            choice_delete = input('\nWrite the number of the book you want to delete: ')
+            Found_Book = False
+            for i, book in enumerate(delete_filter, 1):
+                    if choice_delete.isdigit() and int(choice_delete) == i:
+                        Found_Book = True
+                        sure = input(f'Are you sure you want to delete {book['title']}? (y/n) ')
 
-                if sure.lower() == 'y' or sure.lower() == 'yes':
-                    BookShelf.remove(book)
-                    print('Book deleted with sucess!')
-                
-                else:
-                    print('Ok! The book wont be deleted.')
-                    menu()
-                break
+                        if sure.lower() == 'y' or sure.lower() == 'yes':
+                            BookShelf.remove(book)
+                            print('Book deleted with sucess!')
+                        
+                        else:
+                            print('Ok! The book wont be deleted.')
+                        break
+                    if Found_Book:
+                        break
+                    else:
+                        print("This book doesn't exist. Try again.")
